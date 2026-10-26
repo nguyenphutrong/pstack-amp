@@ -6,7 +6,7 @@ import plugin from '../index.ts'
 
 const root = fileURLToPath(new URL('../', import.meta.url))
 const names = (await readdir(join(root, 'skills'))).sort()
-assert.equal(names.length, 53)
+assert.equal(names.length, 57)
 assert.equal(names.filter(name => name.startsWith('principle-')).length, 24)
 assert.equal((await readdir(join(root, 'skills/poteto-mode/playbooks'))).length, 23)
 
@@ -37,7 +37,7 @@ async function host() {
     },
   })
   assert.deepEqual(skills.sort(), names)
-  assert.equal(commands.size, 30)
+  assert.equal(commands.size, 34)
   return {
     commands,
     turn(message, thread = 'T-one') {
@@ -109,4 +109,4 @@ async function checkLinks(directory) {
   }
 }
 await checkLinks(root)
-console.log(`PASS: 53 skills, 24 principles, 23 playbooks, 30 palette commands; routing, isolation, off, reload, palette output; ${documents} Markdown files linked`)
+console.log(`PASS: 57 skills, 24 principles, 23 playbooks, 34 palette commands; routing, isolation, off, reload, palette output; ${documents} Markdown files linked`)

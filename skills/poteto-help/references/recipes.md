@@ -6,7 +6,7 @@ Swap in the real paths, skills, and done checks. Informal wording works.
 
 - `/pstack read <thread>. restate the underlying issue in your own words, in the user's language.`
 - `/pstack:in-your-own-words <long or messy ask>`
-- `/pstack:sharpen <your task>`
+- `/pstack:sharpen <the prompt you're about to send>`
 - `/pstack investigate why <symptom>. give me what we know, what data you used, and your best hypotheses. don't change any code yet.`
 - `use /pstack:how to understand <subsystem>. then use /pstack:why to find out why it broke recently.`
 - `/pstack:recall my work on <topic> from last week, then read <issue>.`
@@ -34,6 +34,7 @@ Swap in the real paths, skills, and done checks. Informal wording works.
 ## Review and ship
 
 - `/pstack:interrogate the whole branch, but skeptically. don't change anything yet. no nitpicks unless it's a real bug or regression.` Read the dismissals too.
+- `/pstack:create-formal-verification-skill prove <property> holds in <module>, even when <steps> interleave or retry.` After merges or refactors in that code: `/pstack:maintain-formal-verification-skill`.
 - `/pstack:swarm check every package under <dir> against its check script. one worker per package. one report.`
 - `/pstack open the pr. small ordered commits, evidence in the description.`
 - `/pstack babysit this pr. get it green.` For status only: `/pstack check on pr <number>. anything outstanding?`
@@ -43,6 +44,7 @@ Swap in the real paths, skills, and done checks. Informal wording works.
 
 - `/pstack im going to bed. <goal> in a fresh worktree off <base>. done means <checks>. keep a decision log. don't ask me before committing. Continue until done within the available execution session. if you're truly stuck after a few hours, stop and write up why.`
 - `/pstack:show-me-your-work catch me up on what you did last night.` Read its Attention section first.
+- `/pstack:ketchup` catches you up on this chat since your last message and lists every call that waits on you.
 - `/pstack full autopilot on this queue. each item is independent.`
 - `/pstack autopilot these changes but stack them, don't ship. i'll land the stack.`
 - `/pstack:reflect capture what we learned so the next run doesn't repeat it.` Approve only edits that change a future decision.

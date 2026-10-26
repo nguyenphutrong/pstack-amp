@@ -32,6 +32,8 @@ The plugin recognizes only leading `/pstack` and `/pstack:<name>` commands, not 
 
 Treat Amp's hosted skill cache as read-only. Before running a hosted Bun helper, copy the complete `skills/poteto-mode/scripts/` directory to an approved workspace scratch directory and run it there: its bootstrap installs dependencies beside the script. Do not copy dependency directories or write runtime state into the hosted cache.
 
+Statechart's Node helpers may run from their installed directory, but inputs must be writable scratch copies: generation writes beside the input and replaces its dedicated output directory. Never use installed fixtures or a directory containing user work as outputs. TLC needs Java 11+ and a JAR; set `TLA2TOOLS` and optionally `JAVA` to existing tools, or use the documented mise bootstrap. PNG rendering downloads pinned Pele/resvg packages into the user's cache on first use; it needs no browser. These installations happen only on invocation, subject to the user's environment constraints. Mapping files are executable JavaScript: inspect untrusted mappings before running them; they are not sandboxed data.
+
 Discover MCP capabilities with `tool_search` and call them with `code_exec` when available. Don't assume Slack, Linear, browser drivers, or cursor-team-kit are installed. Load `building-skills` before creating or editing any skill. Generate project verification skills under `.agents/skills/verify-<app>/`, then use `reload_skills` and verify discovery.
 
 Use `ask_user_choice` only when the user explicitly asks to be asked questions. Otherwise ask an essential question in prose. Match the response to the user's language.
@@ -39,6 +41,8 @@ Use `ask_user_choice` only when the user explicitly asks to be asked questions. 
 ## Evidence, history, and long runs
 
 Verify the original behavior on the actual CLI, app, API, or storage path. A compile pass is not runtime proof. For changed visuals, render representative states, capture and inspect screenshots with `view_media`, and link an inspected artifact. For measured claims, apply `pstack:benchmark-checklist`. Keep evidence inside the workspace at its approved artifact location. Do not create or change global schedules without a request.
+
+For statecharts, inspect the generated PNGs with `view_media` and attach the source `.mmd` files instead of inserting Mermaid syntax into the reply unless explicitly requested. A chart from a model is not proof about real code until its counterexample is reproduced there. For ketchup-video, render from existing evidence with available local tools, inspect the resulting video, and keep every waiting decision in text; if rendering is unavailable, disclose it and return those decisions without fabricating media.
 
 For GitHub PR comments, reviews, and workflow completions prefer supported event subscriptions over polling. Discover the subscription tools and bind CI monitoring to the exact head commit; only CI subscriptions take a branch. Subscriptions report findings, not permission to push, merge, or deploy. Use a bundled foreground watcher only when subscriptions cannot serve the requested check.
 

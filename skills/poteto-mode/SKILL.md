@@ -26,6 +26,8 @@ Small mechanical changes need the short read, edit, check loop. They do not need
 - Bugs: reproduce before changing code and confirm the mechanism, not a plausible explanation. Use `pstack:tdd` when a cheap local regression check exists or the user asks for it.
 - Performance claims: `pstack:benchmark-checklist` before trusting the number.
 - Missing product driver: `pstack:create-verification-skill`. Existing driver upkeep: `pstack:maintain-verification-skill`.
+- A race or invariant needing bounded exhaustive checking: `pstack:create-formal-verification-skill`. Resync existing models with `pstack:maintain-formal-verification-skill`; read TLA+ results with `pstack:statechart`. Do not introduce a formal model merely because the workflow exists.
+- Requested thread catch-up: `pstack:ketchup`, or `pstack:ketchup-video` when a video is requested. Neither starts implementation or omits decisions to fit a word limit.
 - Long, unattended, or multi-phase work: `pstack:show-me-your-work`. No timer or schedule is created merely by choosing a playbook.
 - Prose: `pstack:unslop`. Docs, PR descriptions, and commit messages: `pstack:technical-writing`. Use plain language in the user's language.
 - Before authorized delivery: inspect the diff for generated clutter and unsafe comment removal. `pstack:no-comments` is a scoped audit, not permission to refactor unrelated code.

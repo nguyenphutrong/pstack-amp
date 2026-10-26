@@ -1,9 +1,25 @@
 # pstack for Amp
 
-Unofficial Amp adaptation of Lauren Tan's MIT-licensed pstack **v0.15.25**.
-Includes **53 skills** (29 workflows and 24 principles), **23 playbooks**, and
-30 command-palette entries including Off. See [NOTICE.md](NOTICE.md) for provenance
+Unofficial Amp adaptation of Lauren Tan's MIT-licensed pstack **v0.15.32**.
+Includes **57 skills** (33 workflows and 24 principles), **23 playbooks**, and
+34 command-palette entries including Off. See [NOTICE.md](NOTICE.md) for provenance
 and intentional differences from Cursor.
+
+## New since v0.15.25
+
+- [Create](skills/create-formal-verification-skill/SKILL.md) and
+  [maintain](skills/maintain-formal-verification-skill/SKILL.md) project-local formal
+  verification, distinguishing model drift from bugs in the current code.
+- [Statechart](skills/statechart/SKILL.md): turn TLA+ results into checked charts
+  and numbered bug paths, or turn an agreed chart into a TLA+ skeleton.
+- [Ketchup-video](skills/ketchup-video/SKILL.md): summarize existing evidence in a
+  silent video, with decisions in text. Ketchup lists every waiting item rather
+  than dropping items to meet a word limit.
+- **Changed behavior:** `/pstack:sharpen` now returns a rewritten prompt instead
+  of carrying out the task. Reflect names the approved edit destination and never
+  edits managed plugin caches.
+- PR helpers distinguish fork heads, prefer an active replacement PR over closed
+  branch history, and cap polling sleeps at the remaining timeout.
 
 ## Use
 
@@ -70,6 +86,13 @@ edit Amp's generated global plugin or skill caches.
   read-only managed cache. Helper tools require Bun; GitHub watching also needs
   authenticated `gh`. Stack-frontier calculation reads the PR base chain through
   `gh` or the optional Origin CLI, plus local branch heads. Graphite is not required.
+- Statechart uses Node.js. Real checking needs TLC 1.7.4 and Java 11+; provide
+  `TLA2TOOLS` and optionally `JAVA`, or let an existing mise installation fetch
+  the documented tools. PNG rendering installs `pele@1.8.0` and
+  `@resvg/resvg-js@2.6.2` in a separate user cache on first use, without a browser.
+  These are optional workflow dependencies, not plugin startup dependencies.
+  Use writable scratch inputs and dedicated outputs, and inspect JavaScript
+  mappings before executing them. Never generate beside installed fixtures.
 
 ## Verify
 
@@ -91,6 +114,12 @@ merely to test loading.
 For retained upstream helper checks, copy `skills/poteto-mode/scripts/` to a
 temporary directory, run `bun install --frozen-lockfile`, `bun run test`, and
 `bun run typecheck` there, then remove only that temporary copy.
+
+Statechart's upstream suite runs with
+`node --test skills/statechart/scripts/test/statechart.test.mjs`. It attempts to
+resolve TLC and install renderer dependencies before selecting tests. Supply
+existing tools and a writable cache, and inspect the skip count: a green exit
+with skipped TLC/PNG checks is not end-to-end model-checking proof.
 
 ## Update upstream
 

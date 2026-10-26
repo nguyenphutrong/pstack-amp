@@ -2,7 +2,7 @@
 
 This is an unofficial Amp adaptation, not a Cursor or Amp product.
 
-The canonical source is Lauren Tan's MIT-licensed pstack v0.15.25 at [cursor/plugins revision f713f14](https://github.com/cursor/plugins/commit/f713f14203cd6420cec13cd7c55c32d598dbab68). This adaptation builds on the existing Amp skill based on v0.15.9. The bundled LICENSE preserves the original copyright and permission notice. Principle leaves, platform-neutral workflows, reference prompts, decision log helper, PR watcher, and orchestration store derive from the pinned source. Amp-owned files retain their adapted behavior and are reviewed separately rather than overwritten by an upstream import.
+The canonical source is Lauren Tan's MIT-licensed pstack v0.15.32 at [cursor/plugins revision 99b609a](https://github.com/cursor/plugins/commit/99b609a72323b70204eab407c622f436e858e112). This adaptation builds on the existing Amp skill based on v0.15.9 and the first plugin port of v0.15.25. The bundled LICENSE preserves the original copyright and permission notice. Principle leaves, platform-neutral workflows, reference prompts, decision log helper, PR watcher, orchestration store, and statechart scripts derive from the pinned source. Amp-owned files retain their adapted behavior and are reviewed separately rather than overwritten by an upstream import.
 
 The [Flavio Copes walkthrough](https://flaviocopes.com/pstack/) explains the intended user workflows. It is a reading reference, not the authoritative inventory; counts here come from the pinned source tree.
 
@@ -10,7 +10,7 @@ The [Flavio Copes walkthrough](https://flaviocopes.com/pstack/) explains the int
 
 ## Amp-owned behavior
 
-The TypeScript entry point explicitly registers all 53 skills and adds 29 workflow palette commands plus an off command. It routes only leading `/pstack` and `/pstack:<skill>` commands, preserves the user's scope, and keeps a session-local poteto-mode reminder per thread. Bare commands such as `/how` are not aliases. It does not register a custom model mode, custom subagent, autonomous continuation hook, or global startup mandate.
+The TypeScript entry point explicitly registers all 57 skills and adds 33 workflow palette commands plus an off command. It routes only leading `/pstack` and `/pstack:<skill>` commands, preserves the user's scope, and keeps a session-local poteto-mode reminder per thread. Bare commands such as `/how` are not aliases. It does not register a custom model mode, custom subagent, autonomous continuation hook, or global startup mandate.
 
 Sixteen skill entry files, fifteen playbooks, and five reference prompts are maintained for Amp. `tools/import-upstream.ts` lists these Amp-owned exclusions and the deterministic changes for imported resources. It checks the pinned revision and clean upstream worktree before importing. The shared Amp execution rules override inherited runtime and permission assumptions for every workflow and reference prompt.
 
@@ -23,6 +23,7 @@ Changes from upstream policy are intentional:
 - Safety constraint comments remain until a replacement is approved and proven.
 - Independent safety proof is separate from CI readiness. Shipping uses current revision checks and a match-head merge condition.
 - Transcript discovery, integrations, scheduling, and skill authoring use supported Amp capabilities and disclose gaps.
+- The v0.15.32 sync includes both formal-verification skills, statechart, ketchup-video, prompt-only sharpen, complete ketchup decisions, and the PR-helper fixes. Setup, help, reflection destinations, and artifact delivery retain Amp-native behavior. Statechart scripts are imported unchanged; tools install only when invoked, never during plugin initialization.
 
 ## Exclusions
 

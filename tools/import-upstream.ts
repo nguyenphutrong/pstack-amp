@@ -3,7 +3,7 @@ import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 // Update the pin only after reviewing the upstream diff and the Amp-owned files.
-const revision = 'f713f14203cd6420cec13cd7c55c32d598dbab68'
+const revision = '99b609a72323b70204eab407c622f436e858e112'
 const root = fileURLToPath(new URL('../', import.meta.url))
 const checkout = process.argv[2]
 if (!checkout) throw new Error('Usage: bun tools/import-upstream.ts <cursor/plugins checkout>')
@@ -83,4 +83,4 @@ async function importDirectory(relative = '') {
 
 await importDirectory()
 await cp(join(source, 'LICENSE'), join(root, 'LICENSE'))
-console.log(`Imported pstack v0.15.25 at ${revision}; ${names.length} skills, Amp-owned files preserved`)
+console.log(`Imported pstack v0.15.32 at ${revision}; ${names.length} skills, Amp-owned files preserved`)
