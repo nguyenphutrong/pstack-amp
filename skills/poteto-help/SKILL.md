@@ -12,9 +12,10 @@ Answer the question, read the relevant linked skill before recommending it, and 
 
 ## Start and stop
 
+- Without a command, the plugin reminds the agent to use pstack for multi-file work, signatures used elsewhere, design choices, unknown-cause bugs, and performance issues. Simple tasks can stay direct unless user instructions require pstack.
 - `/pstack <goal and done check>` selects a playbook and reminds follow-up turns in the current plugin session.
 - `/pstack:<skill> <scope>` runs one workflow, such as `/pstack:how explain the request path`. It does not enable sticky mode.
-- `/pstack off` stops the reminder. After plugin reload or executor restart, invoke `/pstack` again.
+- `/pstack off` stops automatic and playbook reminders for this thread in the current plugin session. Explicit named workflows still work; `/pstack` re-enables playbook reminders. Reload or executor restart restores automatic routing, not the previous on/off state. Off does not override existing user instructions.
 - The command palette has the same workflows. Canceling its input leaves the thread unchanged.
 - Skills have qualified names such as `pstack:how`. Bare commands such as `/how` are not plugin aliases.
 

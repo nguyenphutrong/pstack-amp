@@ -47,26 +47,37 @@ async function host() {
 }
 
 const app = await host()
+const automatic = app.turn('Fix stale totals across the cart and checkout modules')
+assert.match(automatic, /pstack:poteto-mode/, 'ordinary tasks receive routing without a slash command')
+assert.match(automatic, /multiple files/)
+assert.match(automatic, /single-file/)
+assert.match(automatic, /Read-only/)
+assert.equal(app.turn('What is 2 + 2?'), automatic, 'the model assesses scope, not a keyword classifier')
 for (const name of names) {
   const isolated = await host()
   assert.ok(isolated.turn(`/pstack:${name} scoped goal`).includes(`pstack:${name}`), name)
-  if (name !== 'poteto-mode') assert.equal(isolated.turn('next turn'), '', `${name}: must be one-shot`)
+  if (name !== 'poteto-mode') assert.equal(isolated.turn('next turn'), automatic, `${name}: returns to automatic routing`)
 }
 for (const input of ['/how x', '/architect x', '/pstackish x', '/pstack:how-to x',
   'quote /pstack do work', '> /pstack do work', '```\n/pstack do work\n```']) {
   assert.ok(!app.turn(input).includes('Load the skill pstack:'), `must not activate: ${input}`)
-  assert.equal(app.turn('follow-up'), '', `must not become sticky: ${input}`)
+  assert.equal(app.turn('follow-up'), automatic, `must not become sticky: ${input}`)
 }
 assert.match(app.turn('/pstack:unknown'), /Unknown pstack workflow/)
 assert.match(app.turn('  /pstack investigate only'), /pstack:poteto-mode/)
 assert.match(app.turn('follow-up'), /remains active/)
-assert.equal(app.turn('follow-up', 'T-two'), '', 'state must be per-thread')
+assert.equal(app.turn('follow-up', 'T-two'), automatic, 'state must be per-thread')
 assert.match(app.turn('/pstack:how explain only'), /pstack:how/)
 assert.match(app.turn('follow-up'), /remains active/, 'one-shot must not disable an existing mode')
 assert.match(app.turn('/pstack off'), /is off/)
 assert.equal(app.turn('follow-up'), '')
+assert.equal(app.turn('follow-up', 'T-two'), automatic, 'off must not disable other threads')
+assert.match(app.turn('/pstack:how explain only'), /pstack:how/, 'explicit workflows still work while automatic routing is off')
+assert.equal(app.turn('follow-up'), '', 'one-shot must not re-enable automatic routing')
 app.turn('/pstack another task')
-assert.equal((await host()).turn('follow-up'), '', 'reload intentionally clears state')
+assert.match(app.turn('follow-up'), /remains active/, 'explicit main workflow re-enables reminders')
+app.turn('/pstack off')
+assert.equal((await host()).turn('follow-up'), automatic, 'reload restores automatic routing, not stale on/off state')
 
 const appended = []
 const notifications = []
@@ -109,4 +120,4 @@ async function checkLinks(directory) {
   }
 }
 await checkLinks(root)
-console.log(`PASS: 57 skills, 24 principles, 23 playbooks, 34 palette commands; routing, isolation, off, reload, palette output; ${documents} Markdown files linked`)
+console.log(`PASS: 57 skills, 24 principles, 23 playbooks, 34 palette commands; automatic routing, explicit workflows, isolation, off, reload, palette output; ${documents} Markdown files linked`)

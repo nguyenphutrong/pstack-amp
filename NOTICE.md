@@ -8,9 +8,11 @@ The [Flavio Copes walkthrough](https://flaviocopes.com/pstack/) explains the int
 
 [michael-denyer/pstack-claude](https://github.com/michael-denyer/pstack-claude/tree/c1123fe2aaf7963a777f2a4171bf829116873064) was inspected as a portability reference. This port does not copy its source or bundled cursor-team-kit additions. We independently adopt the ideas of explicit runtime adaptation, source pins, isolated writers, and revision-bound delivery proof.
 
+Its [routing hooks at revision 47c6f80](https://github.com/michael-denyer/pstack-claude/tree/47c6f8020ad3a4dc533f220eb362a144bfac2153/plugins/pstack/hooks) also informed the conditional automatic routing policy. Amp implements its own wording and native `agent.start` hook, with no shell hook, model dispatcher, or additional dependency.
+
 ## Amp-owned behavior
 
-The TypeScript entry point explicitly registers all 57 skills and adds 33 workflow palette commands plus an off command. It routes only leading `/pstack` and `/pstack:<skill>` commands, preserves the user's scope, and keeps a session-local poteto-mode reminder per thread. Bare commands such as `/how` are not aliases. It does not register a custom model mode, custom subagent, autonomous continuation hook, or global startup mandate.
+The TypeScript entry point explicitly registers all 57 skills and adds 33 workflow palette commands plus an off command. Each user turn receives conditional automatic routing guidance for substantial engineering tasks. Leading `/pstack` and `/pstack:<skill>` commands explicitly select workflows; bare commands such as `/how` are not aliases. `/pstack off` suppresses automatic and playbook reminders per thread for the current plugin session. Reload restores automatic routing. User scope and permissions are preserved. It does not register a custom model mode, custom subagent, or autonomous continuation hook.
 
 Sixteen skill entry files, fifteen playbooks, and five reference prompts are maintained for Amp. `tools/import-upstream.ts` lists these Amp-owned exclusions and the deterministic changes for imported resources. It checks the pinned revision and clean upstream worktree before importing. The shared Amp execution rules override inherited runtime and permission assumptions for every workflow and reference prompt.
 

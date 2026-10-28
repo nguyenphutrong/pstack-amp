@@ -23,6 +23,13 @@ and intentional differences from Cursor.
 
 ## Use
 
+The plugin adds a short routing reminder on every user turn, without requiring a
+slash command. The agent uses pstack for work spanning multiple files, signatures
+called elsewhere, design choices, bugs with unknown causes, and performance issues.
+An obvious single-file change, one-line edit, or simple question can be handled
+directly. Clear workflow requests go straight to the relevant skill. User and
+repository instructions may require pstack more broadly and still take precedence.
+
 ```text
 /pstack Investigate why checkout times out. Reproduce first; do not change code yet.
 /pstack:architect Design the import API with a checkpoint before implementation.
@@ -31,12 +38,16 @@ and intentional differences from Cursor.
 /pstack off
 ```
 
-The plugin handles only a command at the beginning of a message. Bare aliases
-such as `/how`, quoted commands, and commands inside code fences do not activate
-it. `/pstack` opts into a per-thread reminder; a named workflow is one-shot.
-The reminder survives follow-up turns in the same running plugin, not plugin
-reloads or executor restarts. Invoke `/pstack` again after either. Off disables
-the reminder, not this thread's previous messages or Amp's normal instructions.
+Explicit commands must begin the message. Bare aliases such as `/how`, quoted
+commands, and commands inside code fences are not explicit invocations; they
+still receive the normal automatic routing reminder. `/pstack` keeps the selected
+playbook active for follow-ups; a named workflow is one-shot.
+`/pstack off` stops automatic and playbook reminders in that thread for the current
+plugin session. Explicit named workflows still work while off; `/pstack` turns
+playbook reminders back on. Reloads and executor restarts clear on/off state and
+restore automatic routing. Off does not remove skills, earlier context, or user
+instructions. The reminder guides the model; it does not enforce skill calls or
+start extra agent turns.
 
 The command palette provides the same non-principle workflows. Enter a goal or
 scope to run one; canceling or submitting blank input does nothing. Start a

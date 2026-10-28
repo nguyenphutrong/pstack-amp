@@ -1,12 +1,12 @@
 ---
 name: poteto-mode
-description: "Routes engineering work through pstack playbooks with grounding, small changes, and real verification. Use for /pstack or an explicit pstack workflow request."
+description: "Routes substantial engineering tasks through pstack playbooks with grounding, small changes, and real verification. Use for /pstack, multi-file changes, signatures used elsewhere, design choices, unknown-cause bugs, or performance issues."
 license: MIT
 ---
 
 # Main pstack workflow for Amp
 
-Read [Amp execution rules](references/amp-runtime.md) first. They govern all nested workflows. This mode is opt-in, not a replacement for Amp's system instructions.
+Read [Amp execution rules](references/amp-runtime.md) first. They govern all nested workflows. The plugin recommends this workflow automatically for substantial engineering tasks; `/pstack` selects it explicitly. It does not replace Amp's system instructions.
 
 ## Route and execute
 
@@ -20,8 +20,8 @@ Small mechanical changes need the short read, edit, check loop. They do not need
 
 ## Workflow triggers
 
-- Unknown runtime behavior or ownership: `pstack:how`. Historical intent or regressions: `pstack:why`.
-- A meaningful design fork: `pstack:architect`. Compare at least two caller-first shapes, directly if delegation adds no value. A requested bakeoff: `pstack:arena`.
+- Nontrivial changes, architecture decisions, or unknown runtime behavior or ownership: `pstack:how`. Historical intent or regressions: `pstack:why`.
+- A meaningful design fork, a changed signature used elsewhere, or a change to ownership across function boundaries: `pstack:architect`. Compare at least two caller-first shapes, directly if delegation adds no value. A requested bakeoff: `pstack:arena`.
 - Explicit parallel coverage: `pstack:swarm`. Explicit adversarial review: `pstack:interrogate`. Read-only reviews do not apply fixes.
 - Bugs: reproduce before changing code and confirm the mechanism, not a plausible explanation. Use `pstack:tdd` when a cheap local regression check exists or the user asks for it.
 - Performance claims: `pstack:benchmark-checklist` before trusting the number.
@@ -105,4 +105,4 @@ Read the complete linked leaf before applying it. Preserve behavior and safety b
 
 Lead with the result for the consumer. Explain choices only when they affect review or the next action. Give executed checks and limitations without claiming certainty from summaries. Local, committed, pushed, merged, and deployed are different states. Link only artifacts actually produced or read. Use square-corner text diagrams unless Mermaid was requested.
 
-The plugin reminds later turns in this running session. `/pstack off` disables that reminder. After plugin reload or an executor restart, invoke `/pstack` again. A human redirection always wins over the sticky reminder.
+The plugin supplies automatic routing guidance each turn. Explicit `/pstack` keeps the selected playbook active for follow-ups. `/pstack off` stops both kinds of reminder in this thread for the current plugin session, without disabling explicit named workflows or overriding user instructions. Reloads and executor restarts restore automatic routing; invoke `/pstack` again to resume an explicit playbook reminder. Human redirections always take precedence.
